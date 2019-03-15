@@ -1,17 +1,19 @@
 <template>
   <div id="app">
-    <myList></myList>
+    <div class="navbar navbar-dark bg-dark">
+      <router-link to="/" class="nav-item">Home</router-link>  
+      <router-link to="/myLists" class="nav-item ml-3">My Lists</router-link>
+      <router-link to="/addlist" class="nav-item ml-3">ADD</router-link>
+    </div>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import myList from './components/myList.vue'
+
 
 export default {
-  name: 'app',
-  components: {
-    myList
-  }
+  name: 'app'
 }
 </script>
 
@@ -22,7 +24,10 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+}
+
+.navbar{
+  display: block !important; 
 }
 
 @import '../node_modules/bootstrap/dist/css/bootstrap.css'

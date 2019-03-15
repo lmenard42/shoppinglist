@@ -58,6 +58,7 @@ export default {
                 this.list.push({id: this.id ,text: this.article, checked: this.checked, prix: this.prix})
                 this.emptyList = false
                 ++this.id
+                this.article =''
             }
         },
 
