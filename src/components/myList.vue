@@ -3,7 +3,8 @@
 
     <h1 class="text-center"> {{ title }} </h1>
     <div class="row col-md-3 offset-md-5">
-        <input v-model="article" @keyup.enter="addArticle">
+        <input placeholder="List name"  v-model="name"/>
+        <input placeholder="Item name" v-model="article" @keyup.enter="addArticle">
         <button class="btn btn-secondary mx-2" v-on:click="addArticle">Add</button>
     </div>
 
@@ -36,6 +37,7 @@
 export default {
 
     data: () => ({
+        name: '',
         title: 'Shop List',
         emptyList: true,
         list:[],
@@ -45,11 +47,18 @@ export default {
         prix: 0,
         budget: 0
     }),
+
+created() {
+    
+    this.list = JSON.parse(window.localStorage.getItem('key'))
+    this.list.length == 0 ? this.emptyList = true : this.emptyList = false
+
+
+    },
     
     watch: {
         list(){
             localStorage.setItem('key', JSON.stringify(this.list))
-            console.log(JSON.parse(localStorage.getItem('key')))
         }
     },
     methods: {
@@ -64,7 +73,8 @@ export default {
 
         deleteArticle: function(id){
             this.list.splice(id,1)
-        }
+            this.list.length == 0 ? this.emptyList = true : this.emptyList = false
+        },
 
     },
     computed:{
@@ -74,7 +84,8 @@ export default {
 
         alertBudget: function() {
             return this.calcTotal > this.budget
-        }
+        },
+
     }
 }
 </script>
