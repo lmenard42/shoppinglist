@@ -3,8 +3,7 @@
 
     <h1 class="text-center"> {{ title }} </h1>
     <div class="row col-md-3 offset-md-5">
-        <input placeholder="List name"  v-model="name"/>
-        <input placeholder="Item name" v-model="article" @keyup.enter="addArticle">
+        <input class="mx2" placeholder="Item name" v-model="article" @keyup.enter="addArticle">
         <button class="btn btn-secondary mx-2" v-on:click="addArticle">Add</button>
     </div>
 
@@ -41,6 +40,7 @@ export default {
         title: 'Shop List',
         emptyList: true,
         list:[],
+        listManager: [],
         article: '',
         id: 0,
         checked: false,
@@ -48,17 +48,38 @@ export default {
         budget: 0
     }),
 
-created() {
-    
-    this.list = JSON.parse(window.localStorage.getItem('key'))
-    this.list.length == 0 ? this.emptyList = true : this.emptyList = false
+    created() {
 
+        this.listManager = JSON.parse(window.localStorage.getItem('lists'))
 
+        this.listManager.forEach(element => {
+            if(element.id == this.$route.params.id){
+      
+                this.list = element.productsList
+                return;
+         
+            }
+            
+        });
+
+        this.list.length == 0 ? this.emptyList = true : this.emptyList = false
     },
     
     watch: {
-        list(){
-            localStorage.setItem('key', JSON.stringify(this.list))
+        list: {
+            handler(){
+                console.log(this.list)
+            this.listManager.forEach(element => {
+            if(element.id == this.$route.params.id){
+                console.log("test")
+                element.productsList = this.list
+            } 
+            });
+            console.log(this.listManager)
+                window.localStorage.setItem('lists', JSON.stringify(this.listManager))
+
+            },
+            deep : true
         }
     },
     methods: {
@@ -67,7 +88,7 @@ created() {
                 this.list.push({id: this.id ,text: this.article, checked: this.checked, prix: this.prix})
                 this.emptyList = false
                 ++this.id
-                this.article =''
+                this.article = ''
             }
         },
 

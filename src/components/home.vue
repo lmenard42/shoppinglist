@@ -7,7 +7,7 @@
         </div>
 
         <div v-if="noExistList">
-            <router-link tag="button" class="btn btn-primary btn-lg" id="button" to="/addlist">Create my list</router-link>
+            <router-link tag="button" class="btn btn-primary btn-lg" id="button" to="/mylists">Create my list</router-link>
         </div>
     </div>
 </template>
