@@ -45,7 +45,15 @@ export default {
         id: 0,
         checked: false,
         prix: 0,
-        budget: 0
+        budget: 0,
+        autoFilter: [
+            "jus d'orange",
+            "lait",
+            "café",
+            "pizza",
+            "ricard",
+            "cuvé des trolls"
+        ]
     }),
 
     created() {
