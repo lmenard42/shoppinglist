@@ -10,7 +10,7 @@
                     <div class="row">
                         <input type="text" v-model="list.id" hidden>
                         <input v-model="list.name" type="text" class="ml-2">
-                        <router-link tag="button" class="btn btn-primary ml-2" id="button" :to='"/addlist/"+index'>Edit</router-link>
+                        <router-link tag="button" class="btn btn-primary ml-2" id="button" :to='"/addlist/"+list.id'>Edit</router-link>
                         <button class="btn btn-danger ml-2" @click="deleteList(index)">X</button>
                     </div>
             </li>
@@ -24,12 +24,13 @@ export default {
     data: () => ({
         name: '',
         lists: [],
+        id:0,
         lastId: 0
     }),
 
     created() {
         if(window.localStorage.getItem('lists') !== undefined){
-            this.lists = JSON.parse(window.localStorage.getItem('lists')) || []
+            this.lists = JSON.parse(window.localStorage.getItem('lists'))||[]
         }
 
         this.lists.forEach(element => {
@@ -45,15 +46,13 @@ export default {
                 window.localStorage.setItem('lists',JSON.stringify(this.lists))
             },
             deep : true
-        }
+        },
     },
 
     methods:{
         addList: function() {
             if(this.name !== ''){
-                console.log(this.lastId)
-                this.lists.push({id: this.lastId, name: this.name, productsList: []})
-                this.lastId++
+                this.lists.push({id: this.lastId + 1, name: this.name, productsList: [],budget:50})
                 this.name = ''
             }
         },

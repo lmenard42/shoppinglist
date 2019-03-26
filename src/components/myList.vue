@@ -51,13 +51,11 @@ export default {
     created() {
 
         this.listManager = JSON.parse(window.localStorage.getItem('lists'))
-
         this.listManager.forEach(element => {
-            if(element.id == this.$route.params.id){
-      
+            if(element.id == this.$route.params.id){ 
                 this.list = element.productsList
+                this.budget = element.budget
                 return;
-         
             }
             
         });
@@ -68,20 +66,28 @@ export default {
     watch: {
         list: {
             handler(){
-                console.log(this.list)
+    
             this.listManager.forEach(element => {
-            if(element.id == this.$route.params.id){
-                console.log("test")
-                element.productsList = this.list
-            } 
+                if(element.id == this.$route.params.id){
+                    element.productsList = this.list
+                } 
             });
-            console.log(this.listManager)
+
                 window.localStorage.setItem('lists', JSON.stringify(this.listManager))
 
             },
             deep : true
+        },
+        budget() {
+            this.listManager.forEach(element => {
+                if(element.id == this.$route.params.id){
+                    element.budget = this.budget
+                } 
+            });
+            window.localStorage.setItem('lists', JSON.stringify(this.listManager))
         }
     },
+
     methods: {
         addArticle: function(){
             if(this.article !== ''){
